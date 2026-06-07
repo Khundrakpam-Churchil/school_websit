@@ -1,0 +1,39 @@
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE IF NOT EXISTS Admins (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  full_name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Students (
+  reg_no TEXT PRIMARY KEY,
+  student_name TEXT NOT NULL,
+  password TEXT NOT NULL,
+  class_name TEXT NOT NULL,
+  roll_number TEXT NOT NULL,
+  photo_url TEXT
+);
+
+CREATE TABLE IF NOT EXISTS StudentFees (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  reg_no TEXT NOT NULL,
+  student_name TEXT NOT NULL,
+  fee_status TEXT NOT NULL DEFAULT 'Pending',
+  FOREIGN KEY (reg_no) REFERENCES Students(reg_no) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Notices (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS Gallery (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  category TEXT NOT NULL,
+  image_url TEXT NOT NULL,
+  caption TEXT NOT NULL
+);
