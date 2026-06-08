@@ -1,9 +1,9 @@
-INSERT INTO Admins (username, password, full_name) VALUES
-('admin', 'adminpass', 'School Administrator');
+INSERT INTO Admins (username, password_hash, full_name) VALUES
+('admin', '$2b$10$cBnxPv8saiNVF7EwnKFtOOEWr3fpUUZCJQOddQPZZPMs2ILKAOpZi', 'School Administrator');
 
-INSERT INTO Students (reg_no, student_name, password, class_name, roll_number, photo_url) VALUES
-('STU2026001', 'Aisha Patel', 'student123', '10th Grade', 'A101', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80'),
-('STU2026002', 'Rahul Verma', 'student123', '12th Grade', 'B203', 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80');
+INSERT INTO Students (reg_no, student_name, password_hash, class_name, roll_number, photo_url) VALUES
+('STU2026001', 'Aisha Patel', '$2b$10$HP3LEZRpLOE8aoRemTJ1OexC5UgzlaBa0mcqK0GfnkdcHg/AQ8CT2', '10th Grade', 'A101', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80'),
+('STU2026002', 'Rahul Verma', '$2b$10$HP3LEZRpLOE8aoRemTJ1OexC5UgzlaBa0mcqK0GfnkdcHg/AQ8CT2', '12th Grade', 'B203', 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80');
 
 INSERT INTO StudentFees (reg_no, student_name, fee_status) VALUES
 ('STU2026001', 'Aisha Patel', 'Paid'),
