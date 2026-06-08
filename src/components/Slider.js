@@ -7,27 +7,27 @@ const slides = [
   {
     title: 'School Infrastructure',
     description: 'State-of-the-art buildings and modern learning spaces.',
-    image: 'https://images.unsplash.com/photo-1596495577886-d920f2e6c9bf?auto=format&fit=crop&w=1200&q=80',
+    image: '/slides/infrastructure.png',
   },
   {
     title: 'Playground',
     description: 'Outdoor spaces for sports, assemblies, and student events.',
-    image: 'https://images.unsplash.com/photo-1581093458416-8e91dc5d6a24?auto=format&fit=crop&w=1200&q=80',
+    image: '/slides/playground.png',
   },
   {
     title: 'Academic Excellence',
     description: 'Focused classrooms built for excellence and achievement.',
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80',
+    image: '/slides/academics.png',
   },
   {
     title: 'Sports Activities',
     description: 'Athletics programs to support healthy competitive spirit.',
-    image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80',
+    image: '/slides/sports.png',
   },
   {
     title: 'Hostel Facilities',
     description: 'Safe, comfortable hostel environment for students.',
-    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    image: '/slides/hostel.png',
   },
 ];
 

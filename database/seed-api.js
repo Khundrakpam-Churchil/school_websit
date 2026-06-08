@@ -103,32 +103,32 @@ const noticesData = [
 const galleryData = [
   {
     category: 'Campus',
-    image_url: 'https://images.unsplash.com/photo-1596495577886-d920f2e6c9bf?auto=format&fit=crop&w=1200&q=80',
+    image_url: '/slides/infrastructure.png',
     caption: 'Modern school campus with green spaces'
   },
   {
     category: 'Classrooms',
-    image_url: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80',
+    image_url: '/slides/academics.png',
     caption: 'Bright and interactive classroom environment'
   },
   {
     category: 'Sports',
-    image_url: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80',
+    image_url: '/slides/sports.png',
     caption: 'Students practicing athletics activities'
   },
   {
     category: 'Hostel',
-    image_url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+    image_url: '/slides/hostel.png',
     caption: 'Comfortable hostel accommodation for students'
   },
   {
     category: 'Events',
-    image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80',
-    caption: 'School event with performances and celebrations'
+    image_url: '/slides/playground.png',
+    caption: 'Outdoor campus activities and school events'
   },
   {
     category: 'Campus',
-    image_url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80',
+    image_url: '/slides/infrastructure.png',
     caption: 'Collaborative study spaces and learning zones'
   }
 ];
