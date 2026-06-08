@@ -1,9 +1,43 @@
-node_modules
-dist
-.env
-.DS_Store
-/frontend/node_modules
-/backend/node_modules
-/npm-debug.log*
+# Dependencies
+node_modules/
+/jspm_packages
+/web_modules
+
+# Next.js Build Output
+.next/
+out/
+
+# Production/Distribution
+build/
+dist/
+
+# Debug and Log Files
+npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Local Environment Configs
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -10,10 +10,10 @@ INSERT INTO StudentFees (reg_no, student_name, fee_status) VALUES
 ('STU2026002', 'Rahul Verma', 'Pending');
 
 INSERT INTO Notices (title, content, created_at) VALUES
-('Annual Examination Schedule Released', 'The annual examination timetable is now available for all classes.', datetime('now')),
-('Fee Payment Reminder', 'Students with pending fees should complete payment before the admit card generation date.', datetime('now')),
-('New Library Books Arrived', 'A fresh collection of reference books and journals has been added to the library.', datetime('now')),
-('Sports Day Announcement', 'Sports day will be held next month with special awards for best performers.', datetime('now'));
+('Annual Examination Schedule Released', 'The annual examination timetable is now available for all classes.', CURRENT_TIMESTAMP),
+('Fee Payment Reminder', 'Students with pending fees should complete payment before the admit card generation date.', CURRENT_TIMESTAMP),
+('New Library Books Arrived', 'A fresh collection of reference books and journals has been added to the library.', CURRENT_TIMESTAMP),
+('Sports Day Announcement', 'Sports day will be held next month with special awards for best performers.', CURRENT_TIMESTAMP);
 
 INSERT INTO Gallery (category, image_url, caption) VALUES
 ('Campus', 'https://images.unsplash.com/photo-1596495577886-d920f2e6c9bf?auto=format&fit=crop&w=1200&q=80', 'Modern school campus with green spaces'),
