@@ -1,4 +1,5 @@
-import Link from 'next/link';
+"use client";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -12,10 +13,10 @@ export default function Footer() {
 
         <div className="grid gap-4">
           <h4 className="font-semibold text-white">Quick Links</h4>
-          <Link href="/registration" className="text-slate-300 hover:text-schoolBlue">Registration</Link>
-          <Link href="/notice" className="text-slate-300 hover:text-schoolBlue">Notices</Link>
-          <Link href="/gallery" className="text-slate-300 hover:text-schoolBlue">Gallery</Link>
-          <Link href="/fee" className="text-slate-300 hover:text-schoolBlue">Fee Status</Link>
+          <Link to="/registration" className="text-slate-300 hover:text-schoolBlue">Registration</Link>
+          <Link to="/notice" className="text-slate-300 hover:text-schoolBlue">Notices</Link>
+          <Link to="/gallery" className="text-slate-300 hover:text-schoolBlue">Gallery</Link>
+          <Link to="/fee" className="text-slate-300 hover:text-schoolBlue">Fee Status</Link>
         </div>
 
         <div className="grid gap-4">

@@ -1,13 +1,9 @@
-'use client';
-
+"use client";
 import { useState } from 'react';
-import Link from 'next/link';
-import { useAuth } from '@/context/AuthContext';
+import { Link } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ onLogin, onLogout, user }) {
   const [open, setOpen] = useState(false);
-  const { user, logout, setShowLogin } = useAuth();
-
   const links = [
     { label: 'Home', to: '/' },
     { label: 'Registration', to: '/registration' },
@@ -23,7 +19,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
-        <Link href="/" className="text-xl font-bold tracking-tight text-slate-900">
+        <Link to="/" className="text-xl font-bold tracking-tight text-slate-900">
           <span className="inline-flex items-center gap-2">
             <span className="h-9 w-9 rounded-2xl bg-schoolBlue text-white grid place-items-center text-lg font-semibold">S</span>
             Springfield Portal
@@ -41,7 +37,7 @@ export default function Navbar() {
 
         <nav className="hidden md:flex flex-wrap items-center gap-4 text-sm text-slate-700">
           {links.map((link) => (
-            <Link key={link.to} href={link.to} className="hover:text-schoolBlue transition-colors">
+            <Link key={link.to} to={link.to} className="hover:text-schoolBlue transition-colors">
               {link.label}
             </Link>
           ))}
@@ -52,16 +48,16 @@ export default function Navbar() {
             <>
               <span className="rounded-full bg-slate-100 px-3 py-2 text-sm text-slate-700">{user.role} logged in</span>
               <button
-                onClick={logout}
-                className="rounded-full bg-schoolBlue px-4 py-2 text-white shadow-sm hover:bg-blue-600 cursor-pointer"
+                onClick={onLogout}
+                className="rounded-full bg-schoolBlue px-4 py-2 text-white shadow-sm hover:bg-blue-600"
               >
                 Logout
               </button>
             </>
           ) : (
             <button
-              onClick={() => setShowLogin(true)}
-              className="rounded-full bg-schoolBlue px-4 py-2 text-white shadow-sm hover:bg-blue-600 cursor-pointer"
+              onClick={onLogin}
+              className="rounded-full bg-schoolBlue px-4 py-2 text-white shadow-sm hover:bg-blue-600"
             >
               Login
             </button>
@@ -75,7 +71,7 @@ export default function Navbar() {
             {links.map((link) => (
               <Link
                 key={link.to}
-                href={link.to}
+                to={link.to}
                 onClick={() => setOpen(false)}
                 className="block rounded-2xl px-4 py-3 text-slate-700 hover:bg-slate-50"
               >
@@ -87,20 +83,20 @@ export default function Navbar() {
             {user ? (
               <button
                 onClick={() => {
-                  logout();
+                  onLogout();
                   setOpen(false);
                 }}
-                className="rounded-full bg-schoolBlue px-4 py-3 text-white shadow-sm hover:bg-blue-600 cursor-pointer"
+                className="rounded-full bg-schoolBlue px-4 py-3 text-white shadow-sm hover:bg-blue-600"
               >
                 Logout
               </button>
             ) : (
               <button
                 onClick={() => {
-                  setShowLogin(true);
+                  onLogin();
                   setOpen(false);
                 }}
-                className="rounded-full bg-schoolBlue px-4 py-3 text-white shadow-sm hover:bg-blue-600 cursor-pointer"
+                className="rounded-full bg-schoolBlue px-4 py-3 text-white shadow-sm hover:bg-blue-600"
               >
                 Login
               </button>

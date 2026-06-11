@@ -1,8 +1,3 @@
-export const metadata = {
-  title: "Student Registration | Springfield School Portal",
-  description: "Learn how to register as a student, submit documents, and gain portal access.",
-};
-
 export default function Registration() {
   return (
     <section className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">

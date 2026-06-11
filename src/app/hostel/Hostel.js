@@ -1,8 +1,3 @@
-export const metadata = {
-  title: "Hostel Facilities | Springfield School Portal",
-  description: "Learn about residential and hostel facilities for students at Springfield School.",
-};
-
 export default function Hostel() {
   return (
     <section className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">

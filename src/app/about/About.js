@@ -1,8 +1,3 @@
-export const metadata = {
-  title: "About Springfield School | Springfield School Portal",
-  description: "Learn about Springfield School of Excellence's mission, vision, and core values.",
-};
-
 export default function About() {
   return (
     <section className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">

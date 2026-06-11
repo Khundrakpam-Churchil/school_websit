@@ -1,93 +1,68 @@
-'use client';
-
-import { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { createContext, useContext, useState, useCallback } from 'react';
+import { students, admins, faculty } from '../data/students';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [showLogin, setShowLogin] = useState(false);
-  const [role, setRole] = useState('Student');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [role, setRole] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Load user from localStorage on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('user');
-      if (saved) {
-        setUser(JSON.parse(saved));
-      }
-    } catch (e) {
-      console.error('Failed to load user state from localStorage:', e);
-    } finally {
-      setLoading(false);
+  const login = useCallback((regNumber, password, selectedRole) => {
+    let foundUser = null;
+    let userRole = null;
+
+    if (selectedRole === 'student') {
+      foundUser = students.find(s => s.reg_no === regNumber && s.password === password);
+      if (foundUser) userRole = 'student';
+    } else if (selectedRole === 'admin') {
+      foundUser = admins.find(a => a.username === regNumber && a.password === password);
+      if (foundUser) userRole = 'admin';
+    } else if (selectedRole === 'faculty') {
+      foundUser = faculty.find(f => f.username === regNumber && f.password === password);
+      if (foundUser) userRole = 'faculty';
     }
+
+    if (foundUser) {
+      setUser(foundUser);
+      setRole(userRole);
+      setIsAuthenticated(true);
+      return { success: true, user: foundUser, role: userRole };
+    }
+
+    return { success: false, error: 'Invalid credentials' };
   }, []);
 
-  const handleLogin = async (payload) => {
-    try {
-      setMessage('');
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
-
-      if (!data.success) {
-        setMessage(data.message || 'Login failed');
-        return false;
-      }
-
-      const userData = { role: data.role, profile: data.user, token: data.token };
-      setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      // Store token in cookie for middleware route protection
-      document.cookie = `token=${data.token}; path=/; max-age=86400; SameSite=Lax`;
-
-      setShowLogin(false);
-      setMessage('');
-      
-      if (data.role === 'Admin') {
-        router.push('/admin');
-      } else {
-        router.push('/dashboard');
-      }
-      return true;
-    } catch (error) {
-      setMessage('Unable to connect to the server');
-      return false;
-    }
-  };
-
-  const handleLogout = () => {
+  const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem('user');
-    
-    // Clear token cookie
-    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+    setRole(null);
+    setIsAuthenticated(false);
+  }, []);
 
-    setMessage('You have been logged out');
-    router.push('/');
-  };
+  const canDownloadAdmitCard = useCallback(() => {
+    if (role !== 'student' || !user) return false;
+    return user.fee_status === 'Paid' && user.admit_card_status === 'approved';
+  }, [user, role]);
 
-  const value = useMemo(() => ({
+  const getFeeStatus = useCallback(() => {
+    if (role !== 'student' || !user) return null;
+    return {
+      status: user.fee_status,
+      admit_card_status: user.admit_card_status,
+      can_download: user.fee_status === 'Paid' && user.admit_card_status === 'approved'
+    };
+  }, [user, role]);
+
+  const value = {
     user,
-    setUser,
-    showLogin,
-    setShowLogin,
     role,
-    setRole,
-    message,
-    setMessage,
-    login: handleLogin,
-    logout: handleLogout,
-    loading
-  }), [user, showLogin, role, message, loading]);
+    isAuthenticated,
+    login,
+    logout,
+    canDownloadAdmitCard,
+    getFeeStatus
+  };
 
   return (
     <AuthContext.Provider value={value}>

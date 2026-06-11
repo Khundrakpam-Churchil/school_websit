@@ -1,25 +1,14 @@
-'use client';
-
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
 
-export default function Academics() {
-  const { user } = useAuth();
+export default function Academics({ user }) {
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!user || user.role !== 'Student') {
-      setStatus(null);
-      return;
-    }
+    if (!user || user.role !== 'Student') return;
     setLoading(true);
-    fetch(`/api/student/${user.profile.reg_no}/fee`, {
-      headers: {
-        'Authorization': `Bearer ${user.token}`,
-      },
-    })
+    fetch(`http://localhost:5000/api/student/${user.profile.reg_no}/fee`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -33,12 +22,7 @@ export default function Academics() {
   const downloadAdmitCard = async () => {
     if (!user || user.role !== 'Student') return;
     try {
-      setMessage('Generating admit card...');
-      const response = await fetch(`/api/student/${user.profile.reg_no}/admit-card`, {
-        headers: {
-          'Authorization': `Bearer ${user.token}`,
-        },
-      });
+      const response = await fetch(`http://localhost:5000/api/student/${user.profile.reg_no}/admit-card`);
       if (!response.ok) {
         const data = await response.json();
         setMessage(data.message || 'Unable to download admit card');
@@ -51,7 +35,7 @@ export default function Academics() {
       link.download = `AdmitCard_${user.profile.reg_no}.pdf`;
       link.click();
       window.URL.revokeObjectURL(url);
-      setMessage('Download started successfully');
+      setMessage('Download started');
     } catch (error) {
       setMessage('Unable to generate the admit card');
     }
@@ -90,7 +74,7 @@ export default function Academics() {
                 type="button"
                 onClick={downloadAdmitCard}
                 disabled={user?.role !== 'Student'}
-                className="w-full rounded-full bg-schoolBlue px-6 py-3 text-white shadow-sm transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
+                className="w-full rounded-full bg-schoolBlue px-6 py-3 text-white shadow-sm transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Download Admit Card
               </button>
