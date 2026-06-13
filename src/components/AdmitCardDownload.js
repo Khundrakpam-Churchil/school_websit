@@ -1,8 +1,9 @@
-
 "use client";
 import { useRef, useState } from 'react';
 import { Download, Printer, X, CheckCircle, FileText } from 'lucide-react';
-import AdmitCard from './AdmitCard';
+import AdmitCard from '@/components/AdmitCard';
+import { useAuth } from '@/context/AuthContext';
+import { jsPDF } from 'jspdf';
 
 export default function AdmitCardDownload({ exam, isOpen, onClose }) {
   const cardRef = useRef(null);
@@ -10,19 +11,20 @@ export default function AdmitCardDownload({ exam, isOpen, onClose }) {
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   // Demo student data - replace with actual student data from your auth system
+  const { user } = useAuth() || {};
   const student = {
-    id: 1024,
-    name: 'John Doe',
-    class: 'Grade 10-A',
-    rollNo: '24',
-    regNo: 'REG20251024',
+    id: user?.id || 1024,
+    name: user?.student_name || user?.full_name || 'John Doe',
+    class: user?.class_name || 'Grade 10-A',
+    rollNo: user?.roll_number || '24',
+    regNo: user?.reg_no || 'REG20251024',
   };
 
   if (!isOpen) return null;
 
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
-    const cardContent = cardRef.current.innerHTML;
+    const cardContent = cardRef.current.outerHTML; // use outerHTML to keep the AdmitCard root div styles
     
     printWindow.document.write(`
       <!DOCTYPE html>
@@ -56,31 +58,53 @@ export default function AdmitCardDownload({ exam, isOpen, onClose }) {
   const handleDownload = async () => {
     setIsGenerating(true);
     
-    // Simulate PDF generation delay
-    setTimeout(() => {
-      setIsGenerating(false);
+    try {
+      const element = cardRef.current;
+      
+      // Dynamically import html-to-image to avoid SSR issues
+      const { toPng } = await import('html-to-image');
+      
+      // html-to-image struggles with CSS transforms/scaling
+      // We temporarily remove the scaling class from the parent wrapper
+      const wrapper = element.parentElement;
+      const originalClasses = wrapper.className;
+      wrapper.className = "bg-white p-4"; // Remove scaling classes
+      
+      // Small delay to allow browser to un-scale the element before capture
+      await new Promise(resolve => setTimeout(resolve, 50));
+      
+      // Capture the element
+      const imgData = await toPng(element, {
+        pixelRatio: 2,
+        backgroundColor: '#ffffff'
+      });
+      
+      // Restore the scaling wrapper classes
+      wrapper.className = originalClasses;
+      
+      // A4 dimensions: 210x297mm
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      // Calculate height maintaining aspect ratio from pixel dimensions
+      // Assuming a standard A4 ratio, but calculate exact from element
+      const pdfHeight = (element.offsetHeight * pdfWidth) / element.offsetWidth;
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`AdmitCard_${student.regNo}_${exam.subject.replace(/\s+/g, '_')}.pdf`);
+      
       setDownloadSuccess(true);
-      
-      // Create a simple text-based download as fallback
-      // In production, you'd use a library like html2canvas + jsPDF
-      const admitCardData = {
-        student,
-        exam,
-        generatedAt: new Date().toISOString(),
-      };
-      
-      const blob = new Blob([JSON.stringify(admitCardData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `AdmitCard_${student.regNo}_${exam.subject.replace(/\s+/g, '_')}.json`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      
       setTimeout(() => setDownloadSuccess(false), 3000);
-    }, 1500);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Failed to generate PDF: ' + (error.message || error));
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -115,8 +139,9 @@ export default function AdmitCardDownload({ exam, isOpen, onClose }) {
         {/* Preview Area */}
         <div className="flex-1 overflow-y-auto p-6 bg-slate-100">
           <div className="flex justify-center">
-            <div ref={cardRef} className="scale-[0.65] origin-top transform-gpu">
-              <AdmitCard exam={exam} student={student} />
+            <div className="scale-[0.65] origin-top transform-gpu bg-white p-4">
+              {/* Attach ref directly to AdmitCard so it captures at full 1x scale without wrapper scaling issues */}
+              <AdmitCard ref={cardRef} exam={exam} student={student} />
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Springfield School Portal | Exams, Fees, Notices",
+  title: "SORA Maheikol Portal | Exams, Fees, Notices",
   description: "A modern school examination and fee registration portal.",
 };
 

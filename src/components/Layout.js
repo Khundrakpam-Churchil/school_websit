@@ -1,6 +1,8 @@
-"use client";
+'use client';
+
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   GraduationCap, 
   Menu, 
@@ -16,8 +18,8 @@ import {
   LogOut,
   User
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import LoginModal from './LoginModal';
+import { useAuth } from '@/context/AuthContext';
+import LoginModal from '@/components/LoginModal';
 
 const navItems = [
   { path: '/', label: 'Home', icon: Home },
@@ -33,8 +35,8 @@ export default function Layout({ children }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const location = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -44,7 +46,7 @@ export default function Layout({ children }) {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    router.push('/');
   };
 
   const getUserDisplayName = () => {
@@ -79,7 +81,7 @@ export default function Layout({ children }) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
-            <Link to="/" className="flex items-center gap-3 group">
+            <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <div className="w-10 h-10 bg-gradient-to-br from-schoolBlue to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <GraduationCap className="w-6 h-6 text-white" />
@@ -87,7 +89,7 @@ export default function Layout({ children }) {
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-schoolOrange rounded-full animate-pulse-glow" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold text-slate-800 leading-tight">Springfield</h1>
+                <h1 className="text-lg font-bold text-slate-800 leading-tight">SORA</h1>
                 <p className="text-xs text-slate-500 font-medium">School Portal</p>
               </div>
             </Link>
@@ -95,11 +97,11 @@ export default function Layout({ children }) {
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = location.pathname === item.path;
+                const isActive = location === item.path;
                 return (
                   <Link
                     key={item.path}
-                    to={item.path}
+                    href={item.path}
                     className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                       isActive 
                         ? 'text-schoolBlue bg-blue-50' 
@@ -188,11 +190,11 @@ export default function Layout({ children }) {
 
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = location.pathname === item.path;
+              const isActive = location === item.path;
               return (
                 <Link
                   key={item.path}
-                  to={item.path}
+                  href={item.path}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                     isActive 
@@ -242,11 +244,11 @@ export default function Layout({ children }) {
                 <div className="w-8 h-8 bg-gradient-to-br from-schoolBlue to-blue-600 rounded-lg flex items-center justify-center">
                   <GraduationCap className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-bold text-slate-800">Springfield School</span>
+                <span className="font-bold text-slate-800">SORA Maheikol</span>
               </div>
               <p className="text-sm text-slate-500 leading-relaxed">
                 Empowering students with excellence in education since 1985. 
-                Building tomorrows leaders today.
+                Building tomorrow&apos;s leaders today.
               </p>
             </div>
             <div>
@@ -255,7 +257,7 @@ export default function Layout({ children }) {
                 {navItems.slice(1).map((item) => (
                   <Link 
                     key={item.path} 
-                    to={item.path}
+                    href={item.path}
                     className="block text-sm text-slate-500 hover:text-schoolBlue transition-colors"
                   >
                     {item.label}
@@ -266,14 +268,14 @@ export default function Layout({ children }) {
             <div>
               <h3 className="font-semibold text-slate-800 mb-4">Contact</h3>
               <div className="space-y-2 text-sm text-slate-500">
-                <p>123 Education Lane, Springfield</p>
-                <p>contact@springfield.edu</p>
+                <p>123 Education Lane, SORA</p>
+                <p>contact@SORA.edu</p>
                 <p>+1 (555) 123-4567</p>
               </div>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-slate-200/50 text-center text-sm text-slate-400">
-            © 2026 Springfield School. All rights reserved.
+            © 2026 SORA Maheikol. All rights reserved.
           </div>
         </div>
       </footer>

@@ -114,7 +114,7 @@ export const notices = [
   {
     id: 2,
     title: 'Fee Payment Reminder',
-    content: 'Students with pending fees should complete payment before the admit card generation date. Late payments will incur a penalty of $50.',
+    content: 'Students with pending fees should complete payment before the admit card generation date. Late payments will incur a penalty of ₹50.',
     created_at: '2026-06-02',
     category: 'Administration',
     pinned: true

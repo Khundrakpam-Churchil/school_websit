@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 export default function Academics({ user }) {
@@ -7,7 +9,10 @@ export default function Academics({ user }) {
 
   useEffect(() => {
     if (!user || user.role !== 'Student') return;
+    
+    // Start loading
     setLoading(true);
+    
     fetch(`http://localhost:5000/api/student/${user.profile.reg_no}/fee`)
       .then((res) => res.json())
       .then((data) => {

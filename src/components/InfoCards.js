@@ -1,4 +1,3 @@
-"use client";
 import Link from 'next/link';
 
 const cards = [
@@ -14,7 +13,7 @@ const cards = [
   },
   {
     title: 'About School',
-    summary: 'Springfield School offers modern curriculum, strong exam support, and enrichment programs.',
+    summary: 'SORA Maheikol offers modern curriculum, strong exam support, and enrichment programs.',
     link: '/about',
   },
 ];

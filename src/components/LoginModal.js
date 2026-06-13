@@ -1,6 +1,8 @@
-"use client";
+'use client';
+
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 import { 
   X, 
   GraduationCap, 
@@ -22,6 +24,7 @@ const roles = [
 
 export default function LoginModal({ isOpen, onClose }) {
   const { login } = useAuth();
+  const router = useRouter();
   const [selectedRole, setSelectedRole] = useState('student');
   const [regNumber, setRegNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -69,6 +72,8 @@ export default function LoginModal({ isOpen, onClose }) {
         setRegNumber('');
         setPassword('');
         setIsRobotChecked(false);
+        // Automatically redirect to the correct dashboard!
+        router.push(selectedRole === 'admin' ? '/admin' : '/dashboard');
       } else {
         setError(result.error);
         setShake(true);
@@ -220,7 +225,7 @@ export default function LoginModal({ isOpen, onClose }) {
               </div>
               <div className="flex-1">
                 <p className={`text-sm font-medium ${isRobotChecked ? 'text-emerald-700' : 'text-slate-600'}`}>
-                  I am not a robot
+                  I&apos;m not a robot
                 </p>
                 <p className="text-xs text-slate-400 mt-0.5">Verify your humanity to continue</p>
               </div>
@@ -263,7 +268,7 @@ export default function LoginModal({ isOpen, onClose }) {
 
         <div className="px-6 pb-6 text-center">
           <p className="text-xs text-slate-400">
-            Secure login powered by Springfield School Portal
+            Secure login powered by SORA Maheikol Portal
           </p>
         </div>
       </div>

@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   ArrowRight, 
   Calendar, 
@@ -99,7 +101,7 @@ export default function Home() {
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            Welcome to <span className="gradient-text">Springfield</span>
+            Welcome to <span className="gradient-text">SORA</span>
             <br />
             <span className="text-slate-700">School Portal</span>
           </h1>
@@ -110,15 +112,13 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <Link
-              to="/dashboard"
+            <Link href="/dashboard"
               className="group px-8 py-4 bg-gradient-to-r from-schoolBlue to-blue-600 text-white rounded-2xl font-semibold shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
             >
               Get Started
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link
-              to="/gallery"
+            <Link href="/gallery"
               className="px-8 py-4 bg-white text-slate-700 rounded-2xl font-semibold border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
             >
               Explore Gallery
@@ -169,7 +169,7 @@ export default function Home() {
               return (
                 <Link
                   key={index}
-                  to={feature.path}
+                  href={feature.path}
                   className={`group relative bg-white rounded-2xl p-6 border ${feature.borderColor} hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden animate-fade-in-up`}
                   style={{ animationDelay: `${0.1 * index}s` }}
                 >
@@ -242,8 +242,7 @@ export default function Home() {
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <Link
-            to="/gallery"
+          <Link href="/gallery"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-xl font-medium text-slate-700 hover:border-schoolBlue hover:text-schoolBlue transition-all duration-300 shadow-sm hover:shadow-md"
           >
             View Full Gallery
@@ -267,8 +266,7 @@ export default function Home() {
               <p className="text-blue-100 max-w-xl mx-auto mb-8 text-lg">
                 Access your student dashboard, register for exams, and manage your academic journey all in one place.
               </p>
-              <Link
-                to="/dashboard"
+              <Link href="/dashboard"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-schoolBlue rounded-2xl font-bold shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
               >
                 Go to Dashboard

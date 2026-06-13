@@ -1,6 +1,7 @@
-"use client";
+'use client';
+
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {  useRouter  } from 'next/navigation';
 
 const slides = [
   {
@@ -32,7 +33,7 @@ const slides = [
 
 export default function Slider() {
   const [index, setIndex] = useState(0);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,7 +65,7 @@ export default function Slider() {
         <h3 className="mt-2 text-3xl font-semibold leading-tight">{slides[index].description}</h3>
         <button
           type="button"
-          onClick={() => navigate('/gallery')}
+          onClick={() => router.push('/gallery')}
           className="mt-6 inline-flex rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-900 shadow-lg transition hover:bg-slate-100"
         >
           Explore Gallery

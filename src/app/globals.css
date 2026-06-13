@@ -1,8 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
+  :root {
+    --color-school-blue: #3b82f6;
+    --color-school-orange: #fb923c;
+    --color-school-light: #f8fafc;
+    --color-school-green: #10b981;
+    --color-school-gray: #64748b;
+    --shadow-soft: 0 30px 80px rgba(15, 23, 42, 0.08);
+  }
+
   body {
     @apply bg-slate-50 text-slate-900 antialiased;
   }
@@ -10,11 +17,13 @@
 
 @layer components {
   .glass-card {
-    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-soft;
+    @apply bg-white/80 backdrop-blur-xl border border-white/20;
+    box-shadow: var(--shadow-soft);
   }
   
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-schoolBlue to-schoolOrange;
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, var(--color-school-blue), var(--color-school-orange));
   }
   
   .hover-lift {

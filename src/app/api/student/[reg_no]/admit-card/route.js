@@ -56,7 +56,7 @@ export async function GET(req, { params }) {
     });
 
     // Write contents to doc
-    doc.fontSize(20).fillColor('#1d4ed8').text('Springfield School of Excellence', { align: 'center' });
+    doc.fontSize(20).fillColor('#1d4ed8').text('SORA Maheikol of Excellence', { align: 'center' });
     doc.moveDown();
     doc.fontSize(14).fillColor('#0f172a').text('Admit Card', { align: 'center' });
     doc.moveDown(1);

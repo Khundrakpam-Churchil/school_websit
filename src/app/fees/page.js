@@ -1,5 +1,8 @@
+'use client';
+
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
+import { jsPDF } from 'jspdf';
 import { 
   CreditCard, 
   Download, 
@@ -41,6 +44,64 @@ export default function Fees() {
     setShowPaymentModal(false);
     setPaymentSuccess(true);
     setTimeout(() => setPaymentSuccess(false), 3000);
+  };
+
+  const downloadReceipt = (txn) => {
+    const doc = new jsPDF();
+    
+    // Header
+    doc.setFontSize(24);
+    doc.setTextColor(30, 58, 138); // schoolBlue approx
+    doc.text('School Exam Portal', 105, 20, null, null, 'center');
+    
+    doc.setFontSize(16);
+    doc.setTextColor(15, 23, 42); // slate-900
+    doc.text('Fee Receipt', 105, 30, null, null, 'center');
+    
+    doc.setLineWidth(0.5);
+    doc.line(20, 35, 190, 35);
+    
+    // Details
+    doc.setFontSize(12);
+    doc.text(`Transaction ID: ${txn.id}`, 20, 50);
+    doc.text(`Date: ${txn.date}`, 20, 60);
+    doc.text(`Status: ${txn.status.toUpperCase()}`, 20, 70);
+    
+    doc.text(`Student Name: ${user?.student_name || 'N/A'}`, 120, 50);
+    doc.text(`Reg No: ${user?.reg_no || 'N/A'}`, 120, 60);
+    doc.text(`Class: ${user?.class_name || 'N/A'}`, 120, 70);
+    
+    doc.setLineWidth(0.2);
+    doc.line(20, 80, 190, 80);
+    
+    // Table Header
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Description', 20, 90);
+    doc.text('Amount', 170, 90, null, null, 'right');
+    
+    doc.line(20, 95, 190, 95);
+    
+    // Table Body
+    doc.setFont('helvetica', 'normal');
+    doc.text(txn.type, 20, 105);
+    doc.text(`Rs ${txn.amount}`, 170, 105, null, null, 'right');
+    
+    doc.line(20, 115, 190, 115);
+    
+    // Total
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Total Paid:', 130, 125);
+    doc.text(`Rs ${txn.amount}`, 170, 125, null, null, 'right');
+    
+    // Footer
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139); // slate-500
+    doc.text('This is a computer-generated receipt and does not require a signature.', 105, 150, null, null, 'center');
+    
+    doc.save(`Receipt_${txn.id}.pdf`);
   };
 
   const getStatusColor = (status) => {
@@ -97,7 +158,7 @@ export default function Fees() {
             <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
               <CheckCircle className="w-6 h-6 text-emerald-600" />
             </div>
-            <span className="text-2xl font-bold text-emerald-600">${feeData.paid.toLocaleString()}</span>
+            <span className="text-2xl font-bold text-emerald-600">₹{feeData.paid.toLocaleString()}</span>
           </div>
           <p className="text-sm text-slate-600 font-medium">Total Paid</p>
           <div className="mt-3 w-full bg-emerald-100 rounded-full h-2">
@@ -113,7 +174,7 @@ export default function Fees() {
             <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
               <AlertCircle className="w-6 h-6 text-orange-600" />
             </div>
-            <span className="text-2xl font-bold text-orange-600">${feeData.pending.toLocaleString()}</span>
+            <span className="text-2xl font-bold text-orange-600">₹{feeData.pending.toLocaleString()}</span>
           </div>
           <p className="text-sm text-slate-600 font-medium">Pending Amount</p>
           <div className="mt-3 w-full bg-orange-100 rounded-full h-2">
@@ -129,7 +190,7 @@ export default function Fees() {
             <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
               <CreditCard className="w-6 h-6 text-blue-600" />
             </div>
-            <span className="text-2xl font-bold text-blue-600">${feeData.total.toLocaleString()}</span>
+            <span className="text-2xl font-bold text-blue-600">₹{feeData.total.toLocaleString()}</span>
           </div>
           <p className="text-sm text-slate-600 font-medium">Annual Fee Total</p>
           <p className="text-xs text-slate-400 mt-2">Academic Year 2025-2026</p>
@@ -151,9 +212,9 @@ export default function Fees() {
                   <span className="text-sm font-medium text-slate-700">{item.item}</span>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold text-slate-900">${item.amount}</p>
+                  <p className="text-sm font-bold text-slate-900">₹{item.amount}</p>
                   <p className={`text-xs ${item.paid === item.amount ? 'text-emerald-600' : 'text-orange-600'}`}>
-                    {item.paid === item.amount ? 'Paid' : `Paid: $${item.paid}`}
+                    {item.paid === item.amount ? 'Paid' : `Paid: ₹${item.paid}`}
                   </p>
                 </div>
               </div>
@@ -175,7 +236,7 @@ export default function Fees() {
           
           <div className="mb-6">
             <p className="text-sm text-slate-300 mb-2">Pending Amount</p>
-            <p className="text-3xl font-bold">${feeData.pending.toLocaleString()}</p>
+            <p className="text-3xl font-bold">₹{feeData.pending.toLocaleString()}</p>
           </div>
 
           <button
@@ -191,7 +252,7 @@ export default function Fees() {
               <>All Dues Cleared</>
             ) : (
               <>
-                Pay ${feeData.pending.toLocaleString()} Now
+                Pay ₹{feeData.pending.toLocaleString()} Now
                 <ArrowRight className="w-5 h-5" />
               </>
             )}
@@ -228,7 +289,7 @@ export default function Fees() {
                   <td className="px-6 py-4 text-sm font-medium text-slate-900 font-mono">{txn.id}</td>
                   <td className="px-6 py-4 text-sm text-slate-600">{txn.date}</td>
                   <td className="px-6 py-4 text-sm text-slate-600">{txn.type}</td>
-                  <td className="px-6 py-4 text-sm font-semibold text-slate-900">${txn.amount}</td>
+                  <td className="px-6 py-4 text-sm font-semibold text-slate-900">₹{txn.amount}</td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
                       txn.status === 'paid' 
@@ -239,7 +300,10 @@ export default function Fees() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <button className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+                    <button 
+                      onClick={() => downloadReceipt(txn)}
+                      className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                    >
                       <Download className="w-4 h-4" />
                       Receipt
                     </button>
@@ -266,15 +330,15 @@ export default function Fees() {
               <div className="mb-6 p-4 bg-slate-50 rounded-xl">
                 <div className="flex justify-between mb-2">
                   <span className="text-sm text-slate-600">Pending Amount</span>
-                  <span className="text-lg font-bold text-slate-900">${feeData.pending.toLocaleString()}</span>
+                  <span className="text-lg font-bold text-slate-900">₹{feeData.pending.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-slate-600">Late Fee Penalty</span>
-                  <span className="text-sm font-bold text-red-600">$50</span>
+                  <span className="text-sm font-bold text-red-600">₹50</span>
                 </div>
                 <div className="border-t border-slate-200 mt-3 pt-3 flex justify-between">
                   <span className="font-semibold text-slate-900">Total</span>
-                  <span className="font-bold text-xl text-schoolBlue">${(feeData.pending + 50).toLocaleString()}</span>
+                  <span className="font-bold text-xl text-schoolBlue">₹{(feeData.pending + 50).toLocaleString()}</span>
                 </div>
               </div>
 
@@ -283,7 +347,7 @@ export default function Fees() {
                   onClick={handlePayment}
                   className="w-full py-3 bg-gradient-to-r from-schoolBlue to-blue-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
                 >
-                  Pay ${(feeData.pending + 50).toLocaleString()}
+                  Pay ₹{(feeData.pending + 50).toLocaleString()}
                 </button>
                 <button
                   onClick={() => setShowPaymentModal(false)}

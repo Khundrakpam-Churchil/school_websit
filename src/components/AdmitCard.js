@@ -1,4 +1,3 @@
-"use client";
 import { forwardRef } from 'react';
 import { 
   GraduationCap, 
@@ -47,8 +46,8 @@ const AdmitCard = forwardRef(({ exam, student }, ref) => {
               <GraduationCap className="w-10 h-10 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">SPRINGFIELD SCHOOL</h1>
-              <p className="text-sm text-slate-500 font-medium">123 Education Lane, Springfield • EST. 1985</p>
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">SORA Maheikol</h1>
+              <p className="text-sm text-slate-500 font-medium">Nambol Bazar,SORA. • EST. 2025</p>
               <p className="text-xs text-blue-600 font-bold uppercase tracking-wider mt-1">Official Examination Admit Card</p>
             </div>
           </div>
@@ -70,7 +69,7 @@ const AdmitCard = forwardRef(({ exam, student }, ref) => {
             <Shield className="w-6 h-6" />
             <div>
               <h2 className="text-lg font-bold">ADMIT CARD</h2>
-              <p className="text-blue-100 text-xs">Academic Year 2026-2027 • Final Examination</p>
+              <p className="text-blue-100 text-xs">Academic Year 2025-2026 • Final Examination</p>
             </div>
           </div>
           <div className="text-right">
@@ -209,21 +208,21 @@ const AdmitCard = forwardRef(({ exam, student }, ref) => {
 
         <div className="text-center">
           <div className="w-32 h-12 border-b-2 border-slate-400 mb-2" />
-          <p className="text-xs font-bold text-slate-700">Principals Signature</p>
-          <p className="text-[10px] text-slate-500">Dr. Sarah Johnson</p>
+          <p className="text-xs font-bold text-slate-700">Principal&apos;s Signature</p>
+          <p className="text-[10px] text-slate-500">Dr Thoiba Khuman</p>
         </div>
 
         <div className="text-center">
           <div className="w-32 h-12 border-b-2 border-slate-400 mb-2" />
           <p className="text-xs font-bold text-slate-700">Exam Controller</p>
-          <p className="text-[10px] text-slate-500">Prof. Michael Chen</p>
+          <p className="text-[10px] text-slate-500">Bala Devi</p>
         </div>
       </div>
 
       {/* Security Footer */}
       <div className="mt-6 pt-4 border-t border-slate-200 text-center">
         <p className="text-[10px] text-slate-400 uppercase tracking-wider">
-          This is an official document of Springfield School • Unauthorized reproduction is prohibited
+          This is an official document of SORA Maheikol • Unauthorized reproduction is prohibited
         </p>
         <p className="text-[10px] text-slate-400 mt-1">
           Generated on {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} at {new Date().toLocaleTimeString('en-US')}

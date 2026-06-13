@@ -1,6 +1,8 @@
+'use client';
+
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
+import {  useRouter  } from 'next/navigation';
 import { 
   FileText, 
   Download, 
@@ -13,11 +15,11 @@ import {
   CreditCard,
   X
 } from 'lucide-react';
-import AdmitCardDownload from '../components/AdmitCardDownload';
+import AdmitCardDownload from '@/components/AdmitCardDownload';
 
 export default function Exams() {
   const { user, role, isAuthenticated, canDownloadAdmitCard, getFeeStatus } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [selectedExam, setSelectedExam] = useState(null);
   const [showAdmitCard, setShowAdmitCard] = useState(false);
   const [showFeeBlockModal, setShowFeeBlockModal] = useState(false);
@@ -84,7 +86,7 @@ export default function Exams() {
 
   const handlePayFee = () => {
     setShowFeeBlockModal(false);
-    navigate('/fees');
+    router.push('/fees');
   };
 
   return (
@@ -131,7 +133,7 @@ export default function Exams() {
             </div>
             {user.fee_status !== 'Paid' && (
               <button
-                onClick={() => navigate('/fees')}
+                onClick={() => router.push('/fees')}
                 className="px-4 py-2 bg-white rounded-lg text-sm font-medium border hover:shadow-md transition-all flex items-center gap-2"
               >
                 <CreditCard className="w-4 h-4" />

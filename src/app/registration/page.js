@@ -27,7 +27,7 @@ export default function Registration() {
             <p className="mt-4 text-slate-100">Contact our admissions office for step-by-step support and portal access information.</p>
             <div className="mt-6 space-y-4 text-sm text-slate-200">
               <p>Phone: +1 (555) 123-4567</p>
-              <p>Email: admissions@springfieldschool.edu</p>
+              <p>Email: admissions@SORAschool.edu</p>
             </div>
           </div>
         </div>
