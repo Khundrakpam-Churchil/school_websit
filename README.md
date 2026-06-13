@@ -1,80 +1,63 @@
-# School Examination Registration Portal
+# SORA Maheikol - Official School Portal
 
-A mini full-stack school portal built for academic demonstration with React, Tailwind CSS, Node.js, Express, and MySQL.
+A modern, highly responsive, full-stack school portal built with the latest web technologies. The platform provides a unified interface for students, faculty, and administration to manage exams, view gallery events, handle fee status, and download dynamically generated documents like Admit Cards and Fee Receipts.
 
-## Features
+## ✨ Key Features
 
-- Student login with registration number and password
-- Admin login with admin dashboard
-- Student profile and fee status overview
-- Admit card download when fees are paid
-- Notice board with admin notice management
-- Gallery with category previews and lightbox
-- Responsive modern UI using Tailwind CSS
+- **🎓 Student Dashboard**: A centralized hub for student profile data, registration numbers, and academic status.
+- **📄 Native PDF Generation**: Generate high-quality A4-sized Admit Cards and Fee Receipts instantly on the client side without needing backend rendering.
+- **🔒 Secure Authentication**: Robust session management and secure user logins.
+- **🖼️ Campus Gallery**: An interactive, responsive photo gallery with a modern layout and lightbox for viewing school events.
+- **💰 Fee Management**: View fee payment status and download dynamically generated, timestamped fee receipts directly from the portal.
+- **📝 Exam Registration**: View exam schedules and download official Admit Cards securely (downloads are locked automatically based on fee payment status).
+- **📱 Fully Responsive UI**: Flawless design that adapts perfectly to desktop, tablet, and mobile devices with interactive micro-animations.
 
-## Technology Stack
+## 🚀 Tech Stack
 
-- Frontend: React, Vite, Tailwind CSS, React Router
-- Backend: Node.js, Express
-- Database: MySQL
+- **Framework**: [Next.js](https://nextjs.org/) (React framework utilizing the App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Backend / Database**: [Supabase](https://supabase.com/) & PostgreSQL
+- **PDF Generation**: `jspdf` & `html-to-image`
+- **Deployment**: [Vercel](https://vercel.com/)
 
-## Project Structure
+## 🛠️ Getting Started Locally
 
-- `frontend/` - React application
-- `backend/` - Express API server
-- `database/` - MySQL schema and sample data scripts
+### Prerequisites
+Make sure you have Node.js (v18+) and npm installed on your machine.
 
-## Setup Instructions
+### Installation
 
-1. Install SQLite if not already installed.
-2. Create the SQLite database file and tables using the script:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Khundrakpam-Churchil/school_websit.git
+   cd school_websit
+   ```
 
-```bash
-cd "d:\School Website 3\backend"
-npm install
-npm run init-db
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-3. No database credentials are required for SQLite.
+3. **Set up Environment Variables:**
+   Create a `.env.local` file in the root of the project and add your Supabase credentials:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
-4. Install backend dependencies:
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-```bash
-cd backend
-npm install
-```
+5. **Open the App:**
+   Open your browser and navigate to `http://localhost:3000`.
 
-5. Install frontend dependencies:
+## 📦 Deployment
 
-```bash
-cd ../frontend
-npm install
-```
+This project is optimized for deployment on [Vercel](https://vercel.com/). 
+When code is pushed to the `main` branch on GitHub, Vercel automatically detects the changes, creates an optimized production build, and deploys the updates globally without downtime.
 
-6. Start the backend server:
-
-```bash
-cd ../backend
-npm run dev
-```
-
-7. Start the frontend app:
-
-```bash
-cd ../frontend
-npm run dev
-```
-
-8. Open the app in your browser at `http://localhost:5173`.
-
-## Sample Credentials
-
-- Student: `STU2026001` / `student123`
-- Student: `STU2026002` / `student123`
-- Admin: `admin` / `adminpass`
-
-## Notes
-
-- Admit card downloads are generated dynamically on the server using PDFKit.
-- The frontend is configured to call `http://localhost:5000` for API requests.
-- Tailwind CSS is used for a clean, responsive educational theme with blue, orange, and white styling.
+---
+*Built with ❤️ for SORA Maheikol.*
